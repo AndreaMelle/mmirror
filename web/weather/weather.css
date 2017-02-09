@@ -1,0 +1,30 @@
+.weather-container {
+  line-height: 1;
+  margin: 0;
+  font-weight: 300;
+}
+
+.weather-temperature-now {
+  margin: 0;
+  font-size: 6em;
+  text-align: left;
+  margin-bottom: 5%;
+}
+
+.weather-description-now {
+  margin: 0;
+  margin-bottom: 5%;
+  text-align: left;
+}
+
+.weather-temperature-highlow {
+  margin: 0;
+  font-size: 1.5em;
+  text-align: left;
+}
+
+.weather-icon {
+  font-size: 8em;
+  text-align: left;
+  margin-top: 5%;
+}

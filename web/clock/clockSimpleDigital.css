@@ -1,0 +1,25 @@
+/*
+ * Style for a simple digital clock
+ */
+
+.clock-digital {
+  line-height: 1;
+}
+
+.clock-digital-time {
+  font-size: 8em;
+  text-align: right;
+}
+
+.clock-digital-date {
+  font-size: 3.5em;
+  text-align: right;
+}
+
+.clock-digital-time-sep-off {
+  visibility: hidden;
+}
+
+.clock-digital-time-sep-on {
+  visibility: visible;
+}

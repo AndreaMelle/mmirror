@@ -1,0 +1,23 @@
+html * {
+  background-color: black;
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.module {
+  margin: 0;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.debug-red {
+  background-color: red;
+}
+
+.debug-green {
+  background-color: green;
+}
+
+.debug-blue {
+  background-color: blue;
+}
