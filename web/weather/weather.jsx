@@ -2,7 +2,7 @@
 
 import React from 'react';
 import 'whatwg-fetch';
-import WeatherTables from './WeatherTables';
+import WeatherTables from './weatherTables.jsx';
 import _ from 'lodash';
 
 function checkStatus(response) {
