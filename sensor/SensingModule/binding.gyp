@@ -5,9 +5,11 @@
       "sources": [
         "SensingModule.cc",
         "Sensor.cc",
-        "SensorListener.cc"
+        "SensorListener.cc",
+        "PIR.cc"
       ],
       "cflags": ["-Wall", "-std=c++11"],
+      "defines" : ["PIR_FAKE"],
       "conditions": [
         [ "OS=='mac'", {
             "xcode_settings": {

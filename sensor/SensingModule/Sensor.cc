@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <chrono>
 #include <thread>
+#include "PIR.h"
 
 using namespace Sensing;
 
@@ -52,27 +53,29 @@ void Sensor::Stop()
 
 void Sensor::ExecuteSensingLoop()
 {
-  // TODO: gpio_init();
+  PIR pir;
+  pir.Open();
+  SensorState currentPir = pir.GetState();
 
   while(!m_stop)
   {
-    // TODO: read sensor
+    pir.Update();
 
+    SensorState newPir = pir.GetState();
+
+    if(newPir != currentPir)
     {
-        uv_rwlock_wrlock(&m_dataLock);
-        m_sharedData = 1 - m_sharedData; // fake flip-flop
-        uv_rwlock_wrunlock(&m_dataLock);
+      currentPir = newPir;
+      uv_rwlock_wrlock(&m_dataLock);
+      m_sharedData = currentPir;
+      uv_rwlock_wrunlock(&m_dataLock);
+      uv_async_send(&m_async);
     }
-
-    uv_async_send(&m_async);
-
-    // sleep milliseconds
-    // TODO: really reduce this down to 10
-    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
   }
 
-  // TODO: gpio_cleanup();
+  pir.Close();
+
 }
 
 // Data ready - called on main thread
