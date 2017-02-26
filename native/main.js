@@ -125,6 +125,10 @@ app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
+
+  // make sure we turn the screen back on when we quit so we don't mess up
+  const sh = spawn('sh', [ './lifecycle/screenon.sh' ]);
+
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
