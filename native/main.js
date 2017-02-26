@@ -35,14 +35,13 @@ function switchScreen(state) {
 
 }
 
-
 function createWindow () {
 
   var size = { width : 1080, height : 600 };
 
   if(process.env.MODE === 'PRODUCTION') {
-    var screen = require('screen');
-    size = screen.getPrimaryDisplay().workAreaSize;
+
+    size = electron.screen.getPrimaryDisplay().workAreaSize;
   }
 
   //show: false,
@@ -51,8 +50,15 @@ function createWindow () {
     x: 0,
     y: 0,
     width: size.width,
-    height: size.height
+    height: size.height,
+    frame : false,
+    show : false,
+    backgroundColor : '#000000',
+    kiosk : true,
+    titleBarStyle : 'hidden'
   });
+
+  mainWindow.once('ready-to-show', () => { mainWindow.show(); });
 
   // start up the sensing module
   sensorListener = new sensingModule.SensorListener(0, function(state) {
