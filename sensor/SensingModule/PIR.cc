@@ -45,7 +45,7 @@ void PIR::Update()
 
 #else
   m_pirState = 1 - m_pirState;
-  std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+  std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 #endif
 
 }

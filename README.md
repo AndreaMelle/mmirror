@@ -15,4 +15,6 @@ npm install --no-optional
 
 
 In kiosk mode, on pi,
-ctrl + alt + F1 / F2 switches from / to the desktop gui 
+ctrl + alt + F1 / F2 switches from / to the desktop gui
+
+https://github.com/electron/electron/blob/master/docs/api/screen.md
