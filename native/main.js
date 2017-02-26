@@ -61,7 +61,7 @@ function createWindow () {
     backgroundColor : '#000000',
   };
 
-  if(process.env.MODE === 'PRODUCTION') {
+  //if(process.env.MODE === 'PRODUCTION') {
     size = electron.screen.getPrimaryDisplay().workAreaSize;
     options = {
       x: 0,
@@ -71,8 +71,9 @@ function createWindow () {
       frame : false,
       show : false,
       backgroundColor : '#000000',
+      titleBarStyle : 'hidden'
     };
-  }
+  //}
 
   //show: false,
   mainWindow = new BrowserWindow(options);
@@ -101,13 +102,13 @@ function createWindow () {
     slashes: true
   }));
 
-  if(process.env.MODE === 'PRODUCTION') {
+  //if(process.env.MODE === 'PRODUCTION') {
       // mainWindow.setFullScreen(true);
       mainWindow.webContents.closeDevTools();
-  }
-  else {
-    mainWindow.webContents.openDevTools();
-  }
+  //}
+  //else {
+    //mainWindow.webContents.openDevTools();
+  //}
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

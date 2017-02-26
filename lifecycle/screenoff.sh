@@ -1,3 +1,3 @@
 #!/bin/sh
 
-tvservice --off > /dev/null
+#tvservice --off > /dev/null

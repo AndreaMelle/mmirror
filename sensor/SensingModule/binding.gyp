@@ -9,7 +9,7 @@
         "PIR.cc"
       ],
       "cflags": ["-Wall", "-std=c++11"],
-      "defines" : ["PIR_FAKE"],
+      "libraries" : ["-lpigpio", "-lrt"],
       "conditions": [
         [ "OS=='mac'", {
             "xcode_settings": {

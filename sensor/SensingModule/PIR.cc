@@ -17,7 +17,7 @@ void PIR::Open()
 
   if(res < 0)
   {
-    throw std::runtime_error("Failed to open PIR sensor.");
+    //throw std::runtime_error("Failed to open PIR sensor.");
   }
 
   gpioSetMode(18, PI_INPUT);
@@ -41,7 +41,7 @@ void PIR::Update()
     m_pirState = (pirVal == PI_HIGH) ? Presence : Absence;
   }
 
-  time_sleep(0.1); // seconds
+  time_sleep(0.5); // seconds
 
 #else
   m_pirState = 1 - m_pirState;
