@@ -1,4 +1,5 @@
 const electron = require('electron');
+const { spawn } = require('child_process');
 const sensingModule = require('../sensor/SensingModule/build/Release/SensingModule');
 const api = require('../server/mirrorapi.js');
 
@@ -15,18 +16,49 @@ const url = require('url');
 let mainWindow;
 let sensorListener;
 
+function switchScreen(state) {
+  var script = state ? 'on' : 'off';
+  script = './lifecycle/screen' + script + '.sh';
+  const sh = spawn('sh', [ script ]);
+
+  sh.stdout.on('data', (data) => {
+    console.log(`lifecycle: ${data}`);
+  });
+
+  sh.stderr.on('data', (data) => {
+    console.log(`lifecycle: ${data}`);
+  });
+
+  sh.on('close', (code) => {
+    console.log(`lifecycle process exited with code ${code}`);
+  });
+
+}
+
 
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 1080, height: 600});
 
   // start up the sensing module
-  sensorListener = new sensingModule.SensorListener(0, function(state){
+  sensorListener = new sensingModule.SensorListener(0, function(state) {
     console.log((new Date()).toISOString() + ' : ' + state);
+
+    if(state === 1)
+    {
+      switchScreen(true);
+    }
+    else if(state === 0)
+    {
+      switchScreen(false);
+    }
+
     // if(mainWindow && state === 1)
     // {
     //     mainWindow.reload();
     // }
+
+
   });
 
   // and load the index.html of the app.
