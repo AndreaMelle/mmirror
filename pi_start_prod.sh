@@ -2,4 +2,4 @@
 
 export MODE=PRODUCTION
 
-startx ./node_modules/.bin/electron . --kiosk --
+startx ./node_modules/.bin/electron . --kiosk -- -nocursor
