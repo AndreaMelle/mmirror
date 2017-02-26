@@ -40,8 +40,8 @@ function switchScreen(state) {
 
   if(mainWindow) {
     if (state) {
-      mainWindow.reload(); // TODO: a better signal that only updates what's needed...
       mainWindow.show();
+      //mainWindow.reload(); // TODO: a better signal that only updates what's needed...
     } else {
       mainWindow.hide();
     }
@@ -64,7 +64,6 @@ function createWindow () {
   if(process.env.MODE === 'PRODUCTION') {
     size = electron.screen.getPrimaryDisplay().workAreaSize;
     options = {
-      resizable: false,
       x: 0,
       y: 0,
       width: size.width,
@@ -72,8 +71,6 @@ function createWindow () {
       frame : false,
       show : false,
       backgroundColor : '#000000',
-      kiosk : true,
-      titleBarStyle : 'hidden'
     };
   }
 

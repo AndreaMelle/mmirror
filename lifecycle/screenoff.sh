@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo 'screen off'
+tvservice --off > /dev/null
