@@ -19,7 +19,6 @@ let appReady = false;
 
 function switchScreen(state) {
   if(!appReady) {
-    console.log('not ready')
     return;
   }
 
