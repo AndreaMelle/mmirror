@@ -55,28 +55,25 @@ function createWindow () {
     show : false,
     backgroundColor : '#000000',
     kiosk : true,
-    titleBarStyle : 'hidden'
+    titleBarStyle : 'hidden',
   });
 
   mainWindow.once('ready-to-show', () => { mainWindow.show(); });
 
   // start up the sensing module
   sensorListener = new sensingModule.SensorListener(0, function(state) {
+
     console.log((new Date()).toISOString() + ' : ' + state);
 
-    if(state === 1)
-    {
+    if(state === 1) {
       switchScreen(true);
+      if(mainWindow) {
+          mainWindow.reload();
+      }
     }
-    else if(state === 0)
-    {
+    else if(state === 0) {
       switchScreen(false);
     }
-
-    // if(mainWindow && state === 1)
-    // {
-    //     mainWindow.reload();
-    // }
 
   });
 
