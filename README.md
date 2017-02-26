@@ -12,3 +12,7 @@ lifecycle/start.sh starts the app in production mode.
 We need to configure pm2 to manage the lifecycle and make the app autorun / run forever
 
 npm install --no-optional
+
+
+In kiosk mode, on pi,
+ctrl + alt + F1 / F2 switches from / to the desktop gui 

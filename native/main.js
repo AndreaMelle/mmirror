@@ -37,8 +37,22 @@ function switchScreen(state) {
 
 
 function createWindow () {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1080, height: 600});
+
+  var size = { width : 1080, height : 600 };
+
+  if(process.env.MODE === 'PRODUCTION') {
+    var screen = require('screen');
+    size = screen.getPrimaryDisplay().workAreaSize;
+  }
+
+  //show: false,
+  mainWindow = new BrowserWindow({
+    resizable: false,
+    x: 0,
+    y: 0,
+    width: size.width,
+    height: size.height
+  });
 
   // start up the sensing module
   sensorListener = new sensingModule.SensorListener(0, function(state) {
@@ -58,7 +72,6 @@ function createWindow () {
     //     mainWindow.reload();
     // }
 
-
   });
 
   // and load the index.html of the app.
@@ -69,7 +82,7 @@ function createWindow () {
   }));
 
   if(process.env.MODE === 'PRODUCTION') {
-      mainWindow.setFullScreen(true);
+      // mainWindow.setFullScreen(true);
       mainWindow.webContents.closeDevTools();
   }
   else {
