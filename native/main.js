@@ -15,61 +15,82 @@ const url = require('url');
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 let sensorListener;
+let appReady = false;
 
 function switchScreen(state) {
+  if(!appReady) {
+    console.log('not ready')
+    return;
+  }
+
   var script = state ? 'on' : 'off';
   script = './lifecycle/screen' + script + '.sh';
   const sh = spawn('sh', [ script ]);
 
-  sh.stdout.on('data', (data) => {
-    console.log(`lifecycle: ${data}`);
-  });
+  // sh.stdout.on('data', (data) => {
+  //   console.log(`lifecycle: ${data}`);
+  // });
+  //
+  // sh.stderr.on('data', (data) => {
+  //   console.log(`lifecycle: ${data}`);
+  // });
+  //
+  // sh.on('close', (code) => {
+  //   console.log(`lifecycle process exited with code ${code}`);
+  // });
 
-  sh.stderr.on('data', (data) => {
-    console.log(`lifecycle: ${data}`);
-  });
-
-  sh.on('close', (code) => {
-    console.log(`lifecycle process exited with code ${code}`);
-  });
+  if(mainWindow) {
+    if (state) {
+      mainWindow.reload(); // TODO: a better signal that only updates what's needed...
+      mainWindow.show();
+    } else {
+      mainWindow.hide();
+    }
+  }
 
 }
 
 function createWindow () {
 
   var size = { width : 1080, height : 600 };
-
-  if(process.env.MODE === 'PRODUCTION') {
-
-    size = electron.screen.getPrimaryDisplay().workAreaSize;
-  }
-
-  //show: false,
-  mainWindow = new BrowserWindow({
-    resizable: false,
+  var options = {
     x: 0,
     y: 0,
     width: size.width,
     height: size.height,
-    frame : false,
     show : false,
     backgroundColor : '#000000',
-    kiosk : true,
-    titleBarStyle : 'hidden',
-  });
+  };
 
-  mainWindow.once('ready-to-show', () => { mainWindow.show(); });
+  if(process.env.MODE === 'PRODUCTION') {
+    size = electron.screen.getPrimaryDisplay().workAreaSize;
+    options = {
+      resizable: false,
+      x: 0,
+      y: 0,
+      width: size.width,
+      height: size.height,
+      frame : false,
+      show : false,
+      backgroundColor : '#000000',
+      kiosk : true,
+      titleBarStyle : 'hidden'
+    };
+  }
+
+  //show: false,
+  mainWindow = new BrowserWindow(options);
+
+  mainWindow.once('ready-to-show', () => {
+    appReady = true;
+    switchScreen(false);
+  });
 
   // start up the sensing module
   sensorListener = new sensingModule.SensorListener(0, function(state) {
 
-    console.log((new Date()).toISOString() + ' : ' + state);
-
     if(state === 1) {
       switchScreen(true);
-      if(mainWindow) {
-          mainWindow.reload();
-      }
     }
     else if(state === 0) {
       switchScreen(false);
